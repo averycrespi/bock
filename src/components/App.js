@@ -3,8 +3,7 @@ import { Grid } from "@material-ui/core";
 
 import { fetchGroups, fetchGroupDetails, fetchSeriesDetails } from "../logic/api";
 import LabelledList from "./LabelledList";
-import GroupDetails from "./GroupDetails";
-import SeriesDetails from "./SeriesDetails";
+import Details from "./Details";
 
 export default function App() {
     const [groups, setGroups] = useState([]);
@@ -16,6 +15,7 @@ export default function App() {
     const handleGroupClick = (group) => {
         console.log("Clicked group: " + group.label);
         fetchGroupDetails(group.name, setGroupDetails);
+        setSeriesDetails({});
     };
 
     const handleSeriesClick = (series) => {
@@ -26,17 +26,16 @@ export default function App() {
     return (
         <Grid container>
             <Grid item xs={3}>
-                <LabelledList elems={groups} onClick={handleGroupClick} />
+                <LabelledList items={groups} onClick={handleGroupClick} />
             </Grid>
             <Grid item xs={3}>
-                <GroupDetails details={groupDetails} />
+                <Details details={groupDetails} />
+                <LabelledList items={groupDetails.series || []} onClick={handleSeriesClick} />
             </Grid>
             <Grid item xs={3}>
-                <LabelledList elems={groupDetails.series || []} onClick={handleSeriesClick} />
+                <Details details={seriesDetails} />
             </Grid>
-            <Grid item xs={3}>
-                <SeriesDetails details={seriesDetails} />
-            </Grid>
+            <Grid item xs={3}></Grid>
         </Grid>
     );
 }

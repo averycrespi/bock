@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { Card, CardContent, Typography } from "@material-ui/core";
 
-export default function GroupDetails(props) {
+export default function Details(props) {
     if (Object.keys(props.details).length == 0) {
         return null;
     } else {
@@ -20,6 +20,6 @@ export default function GroupDetails(props) {
     }
 }
 
-GroupDetails.propTypes = {
+Details.propTypes = {
     details: PropTypes.object.isRequired,
 };

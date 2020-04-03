@@ -41,3 +41,17 @@ export const GROUP_DETAILS_SCHEMA = {
         }
     }
 };
+
+export const SERIES_DETAILS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "seriesDetails": {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" },
+                "label": { "type": "string" },
+                "description": { "type": "string" },
+            }
+        }
+    }
+};
