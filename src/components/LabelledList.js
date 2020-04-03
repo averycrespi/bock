@@ -6,13 +6,13 @@ export default function LabelledList(props) {
     const [selectedIndex, setSelectedIndex] = useState();
 
     const handleClick = (event, index) => {
-        props.onClick(props.elems[index]);
+        props.onClick(props.items[index]);
         setSelectedIndex(index);
     }
 
     return (
         <List style={{ maxHeight: "100vh", overflow: "auto" }}>
-            {props.elems.map((elem, index) => {
+            {props.items.map((item, index) => {
                 return (
                     <ListItem
                         button
@@ -20,7 +20,7 @@ export default function LabelledList(props) {
                         selected={index == selectedIndex}
                         onClick={(event) => handleClick(event, index)}
                     >
-                        <ListItemText primary={elem.label} />
+                        <ListItemText primary={item.label} />
                     </ListItem>
                 );
             })}
@@ -29,6 +29,6 @@ export default function LabelledList(props) {
 }
 
 LabelledList.propTypes = {
-    elems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string })).isRequired,
     onClick: PropTypes.func
 };
