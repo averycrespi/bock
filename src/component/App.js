@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import LabelledList from "./LabelledList";
+import DetailsCard from "./DetailsCard";
+import ObservationChart from "./ObservationChart";
 
 import {
   fetchGroups,
@@ -7,9 +12,10 @@ import {
   fetchSeriesDetails,
   fetchObservations,
 } from "../logic/api";
-import LabelledList from "./LabelledList";
-import DetailsCard from "./DetailsCard";
-import ObservationChart from "./ObservationChart";
+
+import { PALETTE } from "../style/palette";
+
+const theme = createMuiTheme({ palette: PALETTE });
 
 export default function App() {
   const [groups, setGroups] = useState([]);
@@ -35,22 +41,27 @@ export default function App() {
   };
 
   return (
-    <Grid container>
-      <Grid item xs={3}>
-        <LabelledList items={groups} onClick={handleGroupClick} />
+    <ThemeProvider theme={theme}>
+      <Grid container>
+        <Grid item xs={3}>
+          <LabelledList items={groups} onClick={handleGroupClick} />
+        </Grid>
+        <Grid item xs={3}>
+          <DetailsCard details={groupDetails} />
+          <LabelledList
+            items={groupDetails.series || []}
+            onClick={handleSeriesClick}
+            maxHeight="50vh"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <DetailsCard details={seriesDetails} />
+          <ObservationChart
+            details={seriesDetails}
+            observations={observations}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={3}>
-        <DetailsCard details={groupDetails} />
-        <LabelledList
-          items={groupDetails.series || []}
-          onClick={handleSeriesClick}
-          maxHeight="50vh"
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <DetailsCard details={seriesDetails} />
-        <ObservationChart details={seriesDetails} observations={observations} />
-      </Grid>
-    </Grid>
+    </ThemeProvider>
   );
 }
