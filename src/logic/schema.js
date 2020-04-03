@@ -1,4 +1,4 @@
-export const GROUP_SCHEMA = {
+export const GROUPS_SCHEMA = {
     "type": "object",
     "properties": {
         "groups": {
@@ -50,7 +50,20 @@ export const SERIES_DETAILS_SCHEMA = {
             "properties": {
                 "name": { "type": "string" },
                 "label": { "type": "string" },
-                "description": { "type": "string" },
+                "description": { "type": "string" }
+            }
+        }
+    }
+};
+
+
+export const OBSERVATIONS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "observations": {
+            "type": "array",
+            "items": {
+                "type": "object"
             }
         }
     }

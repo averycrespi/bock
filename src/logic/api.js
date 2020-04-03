@@ -1,20 +1,22 @@
 import { Validator } from 'jsonschema';
 
-import { GROUP_SCHEMA, GROUP_DETAILS_SCHEMA, SERIES_DETAILS_SCHEMA } from "./schema";
+import { GROUPS_SCHEMA, GROUP_DETAILS_SCHEMA, SERIES_DETAILS_SCHEMA, OBSERVATIONS_SCHEMA } from "./schema";
 
-const GROUP_URL = "https://www.bankofcanada.ca/valet/lists/groups/json";
+const GROUPS_URL = "https://www.bankofcanada.ca/valet/lists/groups/json";
 const GROUP_DETAILS_URL = "https://www.bankofcanada.ca/valet/groups/GROUP_NAME/json";
 const SERIES_DETAILS_URL = "https://www.bankofcanada.ca/valet/series/SERIES_NAME/json";
+const OBSERVATIONS_URL = "https://www.bankofcanada.ca/valet/observations/SERIES_NAME/json?recent=10";
 
-// Flatten `name: { label, link }` to `{name, label, link}`
+// Flatten `name: { ...values }` to `{name, ...values }`
 const flatten = (obj) => Object.entries(obj).map(([k, v]) => ({ name: k, ...v }));
 
 export const fetchGroups = (callback) => {
+    console.log("Fetching groups ...");
     const validator = new Validator();
-    fetch(GROUP_URL)
+    fetch(GROUPS_URL)
         .then(response => response.json())
         .then((data) => {
-            const result = validator.validate(data, GROUP_SCHEMA);
+            const result = validator.validate(data, GROUPS_SCHEMA);
             if (result.valid) {
                 callback(flatten(data.groups));
             } else {
@@ -25,6 +27,7 @@ export const fetchGroups = (callback) => {
 };
 
 export const fetchGroupDetails = (groupName, callback) => {
+    console.log("Fetching details for group: " + groupName + " ...");
     const validator = new Validator();
     fetch(GROUP_DETAILS_URL.replace("GROUP_NAME", groupName))
         .then(response => response.json())
@@ -46,6 +49,7 @@ export const fetchGroupDetails = (groupName, callback) => {
 };
 
 export const fetchSeriesDetails = (seriesName, callback) => {
+    console.log("Fetching details for series: " + seriesName + " ...");
     const validator = new Validator();
     fetch(SERIES_DETAILS_URL.replace("SERIES_NAME", seriesName))
         .then(response => response.json())
@@ -53,6 +57,23 @@ export const fetchSeriesDetails = (seriesName, callback) => {
             const result = validator.validate(data, SERIES_DETAILS_SCHEMA);
             if (result.valid) {
                 callback(data.seriesDetails);
+            } else {
+                console.error(result);
+            }
+        })
+        .catch(console.error);
+};
+
+export const fetchObservations = (seriesName, callback) => {
+    console.log("Fetching observations for series: " + seriesName + " ...");
+    const validator = new Validator();
+    fetch(OBSERVATIONS_URL.replace("SERIES_NAME", seriesName))
+        .then(response => response.json())
+        .then((data) => {
+            const result = validator.validate(data, OBSERVATIONS_SCHEMA);
+            if (result.valid) {
+                const observations = data.observations.map(o => ({ date: o.d, value: Number(o[seriesName].v) }));
+                callback(observations);
             } else {
                 console.error(result);
             }

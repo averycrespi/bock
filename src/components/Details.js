@@ -21,5 +21,9 @@ export default function Details(props) {
 }
 
 Details.propTypes = {
-    details: PropTypes.object.isRequired,
+    details: PropTypes.shape({
+        label: PropTypes.string,
+        name: PropTypes.string,
+        description: PropTypes.string
+    }).isRequired,
 };

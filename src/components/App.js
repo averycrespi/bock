@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from "@material-ui/core";
 
-import { fetchGroups, fetchGroupDetails, fetchSeriesDetails } from "../logic/api";
+import { fetchGroups, fetchGroupDetails, fetchSeriesDetails, fetchObservations } from "../logic/api";
 import LabelledList from "./LabelledList";
 import Details from "./Details";
+import ObservationList from "./ObservationList";
 
 export default function App() {
     const [groups, setGroups] = useState([]);
     const [groupDetails, setGroupDetails] = useState({});
     const [seriesDetails, setSeriesDetails] = useState({});
+    const [observations, setObservations] = useState([]);
 
+    // Load groups once when the component mounts.
     useEffect(() => fetchGroups(setGroups), []);
 
     const handleGroupClick = (group) => {
         console.log("Clicked group: " + group.label);
         fetchGroupDetails(group.name, setGroupDetails);
+        // Clear series details and observations when a new group is clicked.
         setSeriesDetails({});
+        setObservations([]);
     };
 
     const handleSeriesClick = (series) => {
         console.log("Clicked series: " + series.label);
         fetchSeriesDetails(series.name, setSeriesDetails);
+        fetchObservations(series.name, setObservations);
     }
 
     return (
@@ -32,10 +38,10 @@ export default function App() {
                 <Details details={groupDetails} />
                 <LabelledList items={groupDetails.series || []} onClick={handleSeriesClick} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6}>
                 <Details details={seriesDetails} />
+                <ObservationList observations={observations} />
             </Grid>
-            <Grid item xs={3}></Grid>
         </Grid>
     );
 }
