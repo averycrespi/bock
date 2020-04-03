@@ -72,7 +72,10 @@ export const fetchObservations = (seriesName, callback) => {
         .then((data) => {
             const result = validator.validate(data, OBSERVATIONS_SCHEMA);
             if (result.valid) {
-                const observations = data.observations.map(o => ({ date: o.d, value: Number(o[seriesName].v) }));
+                // Convert `{ d, name: v }` to `{ date, value }` and sort in ascending order.
+                const observations = data.observations.map(o => (
+                    { date: o.d, value: Number(o[seriesName].v) }
+                )).reverse();
                 callback(observations);
             } else {
                 console.error(result);
