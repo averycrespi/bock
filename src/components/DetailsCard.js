@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { Card, CardContent, Typography } from "@material-ui/core";
 
-export default function Details(props) {
+export default function DetailsCard(props) {
     if (Object.keys(props.details).length == 0) {
         return null;
     } else {
@@ -20,7 +20,7 @@ export default function Details(props) {
     }
 }
 
-Details.propTypes = {
+DetailsCard.propTypes = {
     details: PropTypes.shape({
         label: PropTypes.string,
         name: PropTypes.string,

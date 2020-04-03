@@ -11,7 +11,7 @@ export default function LabelledList(props) {
     }
 
     return (
-        <List style={{ maxHeight: "100vh", overflow: "auto" }}>
+        <List style={{ maxHeight: props.maxHeight, overflow: "auto" }}>
             {props.items.map((item, index) => {
                 return (
                     <ListItem
@@ -30,5 +30,10 @@ export default function LabelledList(props) {
 
 LabelledList.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string })).isRequired,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    maxHeight: PropTypes.string
+};
+
+LabelledList.defaultProps = {
+    maxHeight: "100vh"
 };
