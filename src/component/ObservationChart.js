@@ -1,14 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Line } from "react-chartjs-2";
+import { useTheme } from "@material-ui/core/styles";
 
 export default function ObservationChart(props) {
+  const theme = useTheme();
+
   const chartData = {
     labels: props.observations.map((o) => o.date),
     datasets: [
       {
         label: props.details.description,
         data: props.observations.map((o) => o.value),
+        borderColor: theme.palette.primary.main,
+        backgroundColor: "#00000000", // Transparent
       },
     ],
   };
