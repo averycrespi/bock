@@ -1,4 +1,5 @@
 // Colours from: https://design.bankofcanada.ca/design/colour-scheme/
+// Palette created by: https://material.io/resources/color/
 export const PALETTE = {
   primary: {
     light: "#FF2258", // Radical Red
