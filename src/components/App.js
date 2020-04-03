@@ -1,31 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Validator } from 'jsonschema';
+import { Grid } from "@material-ui/core";
 
-import TopBar from "./TopBar";
-import { seriesListSchema } from "../schema.js";
+import { fetchGroups, fetchGroupDetails, fetchSeriesDetails } from "../logic/api";
+import LabelledList from "./LabelledList";
+import GroupDetails from "./GroupDetails";
+import SeriesDetails from "./SeriesDetails";
 
 export default function App() {
-    const [series, setSeries] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [groupDetails, setGroupDetails] = useState({});
+    const [seriesDetails, setSeriesDetails] = useState({});
 
-    useEffect(() => {
-        var v = new Validator();
-        fetch('https://www.bankofcanada.ca/valet/lists/series/json')
-            .then(res => res.json())
-            .then((data) => {
-                const result = v.validate(data, seriesListSchema);
-                if (result.valid) {
-                    // Flatten seriesList object into array
-                    setSeries(Object.entries(data.series).map(([k, v]) => ({ name: k, ...v })));
-                } else {
-                    console.error(result);
-                }
-            })
-            .catch(console.error);
-    }, []); // No dependencies => only runs once
+    useEffect(() => fetchGroups(setGroups), []);
+
+    const handleGroupClick = (group) => {
+        console.log("Clicked group: " + group.label);
+        fetchGroupDetails(group.name, setGroupDetails);
+    };
+
+    const handleSeriesClick = (series) => {
+        console.log("Clicked series: " + series.label);
+        fetchSeriesDetails(series.name, setSeriesDetails);
+    }
 
     return (
-        <div>
-            <TopBar series={series} />
-        </div>
+        <Grid container>
+            <Grid item xs={3}>
+                <LabelledList elems={groups} onClick={handleGroupClick} />
+            </Grid>
+            <Grid item xs={3}>
+                <GroupDetails details={groupDetails} />
+            </Grid>
+            <Grid item xs={3}>
+                <LabelledList elems={groupDetails.series || []} onClick={handleSeriesClick} />
+            </Grid>
+            <Grid item xs={3}>
+                <SeriesDetails details={seriesDetails} />
+            </Grid>
+        </Grid>
     );
 }
