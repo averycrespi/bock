@@ -1,3 +1,7 @@
+/**
+ * @module api
+ */
+
 import { Validator } from "jsonschema";
 
 import {
@@ -7,18 +11,23 @@ import {
   OBSERVATIONS_SCHEMA,
 } from "./schema";
 
-const GROUPS_URL = "https://www.bankofcanada.ca/valet/lists/groups/json";
-const GROUP_DETAILS_URL =
-  "https://www.bankofcanada.ca/valet/groups/GROUP_NAME/json";
-const SERIES_DETAILS_URL =
-  "https://www.bankofcanada.ca/valet/series/SERIES_NAME/json";
-const OBSERVATIONS_URL =
-  "https://www.bankofcanada.ca/valet/observations/SERIES_NAME/json?recent=10";
+const BASE_URL = "https://www.bankofcanada.ca/valet";
+const GROUPS_URL = BASE_URL + "/lists/groups/json";
+const GROUP_DETAILS_URL = BASE_URL + "/groups/GROUP_NAME/json";
+const SERIES_DETAILS_URL = BASE_URL + "/series/SERIES_NAME/json";
+const OBSERVATIONS_URL = BASE_URL + "/observations/SERIES_NAME/json?recent=10";
 
-// Flatten `name: { ...values }` to `{name, ...values }`
 const flatten = (obj) =>
   Object.entries(obj).map(([k, v]) => ({ name: k, ...v }));
 
+/**
+ * Fetch groups from the API.
+ *
+ * On success, the resuling groups will be passed to `callback`.
+ *
+ * @method
+ * @param {Function} callback Callback function
+ */
 export const fetchGroups = (callback) => {
   console.log("Fetching groups ...");
   const validator = new Validator();
@@ -35,6 +44,15 @@ export const fetchGroups = (callback) => {
     .catch(console.error);
 };
 
+/**
+ * Fetch group details from the API.
+ *
+ * On success, the resuling details will be passed to `callback`.
+ *
+ * @method
+ * @param {String} groupName Name of the group
+ * @param {Function} callback Callback function
+ */
 export const fetchGroupDetails = (groupName, callback) => {
   console.log("Fetching details for group: " + groupName + " ...");
   const validator = new Validator();
@@ -57,6 +75,15 @@ export const fetchGroupDetails = (groupName, callback) => {
     .catch(console.error);
 };
 
+/**
+ * Fetch series details from the API.
+ *
+ * On success, the resuling details will be passed to `callback`.
+ *
+ * @method
+ * @param {String} seriesName Name of the series
+ * @param {Function} callback Callback function
+ */
 export const fetchSeriesDetails = (seriesName, callback) => {
   console.log("Fetching details for series: " + seriesName + " ...");
   const validator = new Validator();
@@ -73,6 +100,15 @@ export const fetchSeriesDetails = (seriesName, callback) => {
     .catch(console.error);
 };
 
+/**
+ * Fetch observations from the API.
+ *
+ * On success, the resuling observations will be passed to `callback`.
+ *
+ * @method
+ * @param {String} seriesName Name of the series
+ * @param {Function} callback Callback function
+ */
 export const fetchObservations = (seriesName, callback) => {
   console.log("Fetching observations for series: " + seriesName + " ...");
   const validator = new Validator();

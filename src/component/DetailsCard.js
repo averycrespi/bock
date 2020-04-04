@@ -2,7 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardContent, Typography } from "@material-ui/core";
 
-export default function DetailsCard(props) {
+/**
+ * Renders a card with details.
+ *
+ * If `details` is empty, no card is rendered.
+ *
+ * @component
+ */
+const DetailsCard = (props) => {
   if (Object.keys(props.details).length == 0) {
     return null;
   }
@@ -17,7 +24,7 @@ export default function DetailsCard(props) {
       </Card>
     </div>
   );
-}
+};
 
 DetailsCard.propTypes = {
   details: PropTypes.shape({
@@ -26,3 +33,5 @@ DetailsCard.propTypes = {
     description: PropTypes.string,
   }).isRequired,
 };
+
+export default DetailsCard;

@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
-export default function LabelledList(props) {
+/**
+ * Renders a list of labelled items.
+ *
+ * If `items` is empty, no list is rendered.
+ *
+ * @component
+ */
+const LabelledList = (props) => {
   const [selectedIndex, setSelectedIndex] = useState();
 
-  const handleClick = (event, index) => {
+  const handleClick = (index) => {
     props.onClick(props.items[index]);
     setSelectedIndex(index);
   };
@@ -19,7 +26,7 @@ export default function LabelledList(props) {
               button
               key={index}
               selected={index == selectedIndex}
-              onClick={(event) => handleClick(event, index)}
+              onClick={() => handleClick(index)}
             >
               <ListItemText primary={item.label} />
             </ListItem>
@@ -28,15 +35,17 @@ export default function LabelledList(props) {
       </List>
     )
   );
-}
+};
 
 LabelledList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string }))
     .isRequired,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
   maxHeight: PropTypes.string,
 };
 
 LabelledList.defaultProps = {
   maxHeight: "100vh",
 };
+
+export default LabelledList;
