@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: logic/api.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">Bock</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-schema.html">schema</a></li><li><a href="module-styles.html">styles</a></li></ul><h3>Components</h3><ul><li><a href="ActionBar.html">ActionBar</a></li><li><a href="App.html">App</a></li><li><a href="ContentGrid.html">ContentGrid</a></li><li><a href="DetailsCard.html">DetailsCard</a></li><li><a href="LabelledList.html">LabelledList</a></li><li><a href="ObservationChart.html">ObservationChart</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>logic/api.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module api
+ */
+
+import { Validator } from "jsonschema";
+
+import {
+  GROUPS_SCHEMA,
+  GROUP_DETAILS_SCHEMA,
+  SERIES_DETAILS_SCHEMA,
+  OBSERVATIONS_SCHEMA,
+} from "./schema";
+
+const BASE_URL = "https://www.bankofcanada.ca/valet";
+const GROUPS_URL = BASE_URL + "/lists/groups/json";
+const GROUP_DETAILS_URL = BASE_URL + "/groups/GROUP_NAME/json";
+const SERIES_DETAILS_URL = BASE_URL + "/series/SERIES_NAME/json";
+const OBSERVATIONS_URL = BASE_URL + "/observations/SERIES_NAME/json?recent=10";
+
+const flatten = (obj) =>
+  Object.entries(obj).map(([k, v]) => ({ name: k, ...v }));
+
+/**
+ * Fetch groups from the API.
+ *
+ * On success, the resuling groups will be passed to `callback`.
+ *
+ * @method
+ * @param {Function} callback Callback function
+ */
+export const fetchGroups = (callback) => {
+  console.log("Fetching groups ...");
+  const validator = new Validator();
+  fetch(GROUPS_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      const result = validator.validate(data, GROUPS_SCHEMA);
+      if (result.valid) {
+        callback(flatten(data.groups));
+      } else {
+        console.error(result);
+      }
+    })
+    .catch(console.error);
+};
+
+/**
+ * Fetch group details from the API.
+ *
+ * On success, the resuling details will be passed to `callback`.
+ *
+ * @method
+ * @param {String} groupName Name of the group
+ * @param {Function} callback Callback function
+ */
+export const fetchGroupDetails = (groupName, callback) => {
+  console.log("Fetching details for group: " + groupName + " ...");
+  const validator = new Validator();
+  fetch(GROUP_DETAILS_URL.replace("GROUP_NAME", groupName))
+    .then((response) => response.json())
+    .then((data) => {
+      const result = validator.validate(data, GROUP_DETAILS_SCHEMA);
+      if (result.valid) {
+        const details = {
+          name: data.groupDetails.name,
+          label: data.groupDetails.label,
+          description: data.groupDetails.description,
+          series: flatten(data.groupDetails.groupSeries),
+        };
+        callback(details);
+      } else {
+        console.error(result);
+      }
+    })
+    .catch(console.error);
+};
+
+/**
+ * Fetch series details from the API.
+ *
+ * On success, the resuling details will be passed to `callback`.
+ *
+ * @method
+ * @param {String} seriesName Name of the series
+ * @param {Function} callback Callback function
+ */
+export const fetchSeriesDetails = (seriesName, callback) => {
+  console.log("Fetching details for series: " + seriesName + " ...");
+  const validator = new Validator();
+  fetch(SERIES_DETAILS_URL.replace("SERIES_NAME", seriesName))
+    .then((response) => response.json())
+    .then((data) => {
+      const result = validator.validate(data, SERIES_DETAILS_SCHEMA);
+      if (result.valid) {
+        callback(data.seriesDetails);
+      } else {
+        console.error(result);
+      }
+    })
+    .catch(console.error);
+};
+
+/**
+ * Fetch observations from the API.
+ *
+ * On success, the resuling observations will be passed to `callback`.
+ *
+ * @method
+ * @param {String} seriesName Name of the series
+ * @param {Function} callback Callback function
+ */
+export const fetchObservations = (seriesName, callback) => {
+  console.log("Fetching observations for series: " + seriesName + " ...");
+  const validator = new Validator();
+  fetch(OBSERVATIONS_URL.replace("SERIES_NAME", seriesName))
+    .then((response) => response.json())
+    .then((data) => {
+      const result = validator.validate(data, OBSERVATIONS_SCHEMA);
+      if (result.valid) {
+        // Convert `{ d, name: v }` to `{ date, value }` and sort in ascending order.
+        const observations = data.observations
+          .map((o) => ({ date: o.d, value: Number(o[seriesName].v) }))
+          .reverse();
+        callback(observations);
+      } else {
+        console.error(result);
+      }
+    })
+    .catch(console.error);
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Apr 03 2020 22:12:00 GMT-0700 (Pacific Daylight Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
