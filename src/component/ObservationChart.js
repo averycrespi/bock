@@ -18,11 +18,9 @@ export default function ObservationChart(props) {
     ],
   };
 
-  if (Object.keys(props.observations).length == 0) {
-    return null;
-  } else {
-    return <Line data={chartData} />;
-  }
+  return (
+    Object.keys(props.observations).length > 0 && <Line data={chartData} />
+  );
 }
 
 ObservationChart.propTypes = {
