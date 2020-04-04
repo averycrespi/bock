@@ -44,7 +44,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-schema.html">schema</a></li><li><a href="module-styles.html">styles</a></li></ul><h3>Components</h3><ul><li><a href="ActionBar.html">ActionBar</a></li><li><a href="App.html">App</a></li><li><a href="ContentGrid.html">ContentGrid</a></li><li><a href="DetailsCard.html">DetailsCard</a></li><li><a href="LabelledList.html">LabelledList</a></li><li><a href="ObservationChart.html">ObservationChart</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-schema.html">schema</a></li><li><a href="module-style.html">style</a></li></ul><h3>Components</h3><ul><li><a href="ActionBar.html">ActionBar</a></li><li><a href="App.html">App</a></li><li><a href="ContentGrid.html">ContentGrid</a></li><li><a href="DetailsCard.html">DetailsCard</a></li><li><a href="LabelledList.html">LabelledList</a></li><li><a href="ObservationChart.html">ObservationChart</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -109,7 +109,7 @@
         
         <span class="code-name">
             
-                fetchGroupDetails<span class="signature">(groupName, callback)</span><span class="type-signature"></span>
+                fetchGroupDetails<span class="signature">(groupName)</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -118,8 +118,8 @@
     
     
     <div class="description">
-        <p>Fetch group details from the API.</p>
-<p>On success, the resuling details will be passed to <code>callback</code>.</p>
+        <p>Fetch group details from the API.
+*</p>
     </div>
     
 
@@ -178,31 +178,6 @@
 
 
     
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>callback</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Callback function</p></td>
-</tr>
-
-
-    
     </tbody>
 </table>
 
@@ -245,7 +220,7 @@
         <p class="tag-source">
             <a href="logic_api.js.html" class="button">View Source</a>
             <span>
-                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line56">line 56</a>
+                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line50">line 50</a>
             </span>
         </p>
     
@@ -266,7 +241,49 @@
 
 
 
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+        
+            <div class='param-desc column is-12'><p>Will throw an error if fetching, parsing, or validation fails</p></div>
+        
+    
+</div>
 
+                
+        </div>
+    </div>
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>Group details object</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 
@@ -286,7 +303,7 @@
         
         <span class="code-name">
             
-                fetchGroups<span class="signature">(callback)</span><span class="type-signature"></span>
+                fetchGroups<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -296,7 +313,6 @@
     
     <div class="description">
         <p>Fetch groups from the API.</p>
-<p>On success, the resuling groups will be passed to <code>callback</code>.</p>
     </div>
     
 
@@ -307,56 +323,6 @@
 
 
 
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>callback</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Callback function</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
 
 
 
@@ -397,7 +363,7 @@
         <p class="tag-source">
             <a href="logic_api.js.html" class="button">View Source</a>
             <span>
-                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line31">line 31</a>
+                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line36">line 36</a>
             </span>
         </p>
     
@@ -418,7 +384,49 @@
 
 
 
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+        
+            <div class='param-desc column is-12'><p>Will throw an error if fetching, parsing, or validation fails</p></div>
+        
+    
+</div>
 
+                
+        </div>
+    </div>
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>Array of group objects</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 
@@ -438,7 +446,7 @@
         
         <span class="code-name">
             
-                fetchObservations<span class="signature">(seriesName, callback)</span><span class="type-signature"></span>
+                fetchObservations<span class="signature">(seriesName)</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -448,7 +456,6 @@
     
     <div class="description">
         <p>Fetch observations from the API.</p>
-<p>On success, the resuling observations will be passed to <code>callback</code>.</p>
     </div>
     
 
@@ -507,31 +514,6 @@
 
 
     
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>callback</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Callback function</p></td>
-</tr>
-
-
-    
     </tbody>
 </table>
 
@@ -574,7 +556,7 @@
         <p class="tag-source">
             <a href="logic_api.js.html" class="button">View Source</a>
             <span>
-                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line112">line 112</a>
+                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line83">line 83</a>
             </span>
         </p>
     
@@ -595,7 +577,49 @@
 
 
 
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+        
+            <div class='param-desc column is-12'><p>Will throw an error if fetching, parsing, or validation fails</p></div>
+        
+    
+</div>
 
+                
+        </div>
+    </div>
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>Array of observation objects</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 
@@ -615,7 +639,7 @@
         
         <span class="code-name">
             
-                fetchSeriesDetails<span class="signature">(seriesName, callback)</span><span class="type-signature"></span>
+                fetchSeriesDetails<span class="signature">(seriesName)</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -625,7 +649,6 @@
     
     <div class="description">
         <p>Fetch series details from the API.</p>
-<p>On success, the resuling details will be passed to <code>callback</code>.</p>
     </div>
     
 
@@ -684,31 +707,6 @@
 
 
     
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>callback</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Callback function</p></td>
-</tr>
-
-
-    
     </tbody>
 </table>
 
@@ -751,7 +749,7 @@
         <p class="tag-source">
             <a href="logic_api.js.html" class="button">View Source</a>
             <span>
-                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line87">line 87</a>
+                <a href="logic_api.js.html">logic/api.js</a>, <a href="logic_api.js.html#line69">line 69</a>
             </span>
         </p>
     
@@ -772,7 +770,49 @@
 
 
 
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+        
+            <div class='param-desc column is-12'><p>Will throw an error if fetching, parsing, or validation fails</p></div>
+        
+    
+</div>
 
+                
+        </div>
+    </div>
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>Series details object</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 
@@ -801,7 +841,7 @@
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Apr 03 2020 22:12:00 GMT-0700 (Pacific Daylight Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Apr 04 2020 14:02:58 GMT-0700 (Pacific Daylight Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

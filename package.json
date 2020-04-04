@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
   "dependencies": {
     "@material-ui/core": "^4.9.0",
     "@material-ui/lab": "^4.0.0-alpha.47",

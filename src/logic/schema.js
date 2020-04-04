@@ -1,6 +1,4 @@
-/**
- * @module schema
- */
+/** @module schema */
 
 /**
  * Validates data from the groups API endpoint.

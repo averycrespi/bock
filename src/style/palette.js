@@ -1,6 +1,4 @@
-/**
- * @module style
- */
+/** @module style */
 
 /**
  * Stores the UI colour palette.

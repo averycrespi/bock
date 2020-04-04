@@ -46,7 +46,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-schema.html">schema</a></li><li><a href="module-styles.html">styles</a></li></ul><h3>Components</h3><ul><li><a href="ActionBar.html">ActionBar</a></li><li><a href="App.html">App</a></li><li><a href="ContentGrid.html">ContentGrid</a></li><li><a href="DetailsCard.html">DetailsCard</a></li><li><a href="LabelledList.html">LabelledList</a></li><li><a href="ObservationChart.html">ObservationChart</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-schema.html">schema</a></li><li><a href="module-style.html">style</a></li></ul><h3>Components</h3><ul><li><a href="ActionBar.html">ActionBar</a></li><li><a href="App.html">App</a></li><li><a href="ContentGrid.html">ContentGrid</a></li><li><a href="DetailsCard.html">DetailsCard</a></li><li><a href="LabelledList.html">LabelledList</a></li><li><a href="ObservationChart.html">ObservationChart</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -64,9 +64,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @module api
- */
+            <pre class="prettyprint source linenums"><code>/** @module api */
 
 import { Validator } from "jsonschema";
 
@@ -78,122 +76,89 @@ import {
 } from "./schema";
 
 const BASE_URL = "https://www.bankofcanada.ca/valet";
-const GROUPS_URL = BASE_URL + "/lists/groups/json";
-const GROUP_DETAILS_URL = BASE_URL + "/groups/GROUP_NAME/json";
-const SERIES_DETAILS_URL = BASE_URL + "/series/SERIES_NAME/json";
-const OBSERVATIONS_URL = BASE_URL + "/observations/SERIES_NAME/json?recent=10";
 
 const flatten = (obj) =>
   Object.entries(obj).map(([k, v]) => ({ name: k, ...v }));
 
+async function fetchData(url, schema, transform) {
+  const response = await fetch(url);
+  const data = await response.json();
+  const validator = new Validator();
+  const result = validator.validate(data, schema);
+  if (result.valid) {
+    return transform(data);
+  } else {
+    throw result;
+  }
+}
+
 /**
  * Fetch groups from the API.
  *
- * On success, the resuling groups will be passed to `callback`.
- *
  * @method
- * @param {Function} callback Callback function
+ * @returns {Promise} Array of group objects
+ * @throws Will throw an error if fetching, parsing, or validation fails
  */
-export const fetchGroups = (callback) => {
+export async function fetchGroups() {
   console.log("Fetching groups ...");
-  const validator = new Validator();
-  fetch(GROUPS_URL)
-    .then((response) => response.json())
-    .then((data) => {
-      const result = validator.validate(data, GROUPS_SCHEMA);
-      if (result.valid) {
-        callback(flatten(data.groups));
-      } else {
-        console.error(result);
-      }
-    })
-    .catch(console.error);
-};
+  const url = BASE_URL + "/lists/groups/json";
+  return fetchData(url, GROUPS_SCHEMA, (data) => flatten(data.groups));
+}
 
 /**
  * Fetch group details from the API.
- *
- * On success, the resuling details will be passed to `callback`.
- *
+ * *
  * @method
  * @param {String} groupName Name of the group
- * @param {Function} callback Callback function
+ * @returns {Promise} Group details object
+ * @throws Will throw an error if fetching, parsing, or validation fails
  */
-export const fetchGroupDetails = (groupName, callback) => {
+export async function fetchGroupDetails(groupName) {
   console.log("Fetching details for group: " + groupName + " ...");
-  const validator = new Validator();
-  fetch(GROUP_DETAILS_URL.replace("GROUP_NAME", groupName))
-    .then((response) => response.json())
-    .then((data) => {
-      const result = validator.validate(data, GROUP_DETAILS_SCHEMA);
-      if (result.valid) {
-        const details = {
-          name: data.groupDetails.name,
-          label: data.groupDetails.label,
-          description: data.groupDetails.description,
-          series: flatten(data.groupDetails.groupSeries),
-        };
-        callback(details);
-      } else {
-        console.error(result);
-      }
-    })
-    .catch(console.error);
-};
+  const url = BASE_URL + "/groups/" + groupName + "/json";
+  return fetchData(url, GROUP_DETAILS_SCHEMA, (data) => ({
+    name: data.groupDetails.name,
+    label: data.groupDetails.label,
+    description: data.groupDetails.description,
+    series: flatten(data.groupDetails.groupSeries),
+  }));
+}
 
 /**
  * Fetch series details from the API.
  *
- * On success, the resuling details will be passed to `callback`.
- *
  * @method
  * @param {String} seriesName Name of the series
- * @param {Function} callback Callback function
+ * @returns {Promise} Series details object
+ * @throws Will throw an error if fetching, parsing, or validation fails
  */
-export const fetchSeriesDetails = (seriesName, callback) => {
+export async function fetchSeriesDetails(seriesName) {
   console.log("Fetching details for series: " + seriesName + " ...");
-  const validator = new Validator();
-  fetch(SERIES_DETAILS_URL.replace("SERIES_NAME", seriesName))
-    .then((response) => response.json())
-    .then((data) => {
-      const result = validator.validate(data, SERIES_DETAILS_SCHEMA);
-      if (result.valid) {
-        callback(data.seriesDetails);
-      } else {
-        console.error(result);
-      }
-    })
-    .catch(console.error);
-};
+  const url = BASE_URL + "/series/" + seriesName + "/json";
+  return fetchData(url, SERIES_DETAILS_SCHEMA, (data) => data.seriesDetails);
+}
 
 /**
  * Fetch observations from the API.
  *
- * On success, the resuling observations will be passed to `callback`.
- *
  * @method
  * @param {String} seriesName Name of the series
- * @param {Function} callback Callback function
+ * @returns {Promise} Array of observation objects
+ * @throws Will throw an error if fetching, parsing, or validation fails
  */
-export const fetchObservations = (seriesName, callback) => {
+export async function fetchObservations(seriesName) {
   console.log("Fetching observations for series: " + seriesName + " ...");
-  const validator = new Validator();
-  fetch(OBSERVATIONS_URL.replace("SERIES_NAME", seriesName))
-    .then((response) => response.json())
-    .then((data) => {
-      const result = validator.validate(data, OBSERVATIONS_SCHEMA);
-      if (result.valid) {
-        // Convert `{ d, name: v }` to `{ date, value }` and sort in ascending order.
-        const observations = data.observations
-          .map((o) => ({ date: o.d, value: Number(o[seriesName].v) }))
-          .reverse();
-        callback(observations);
-      } else {
-        console.error(result);
-      }
-    })
-    .catch(console.error);
-};
+  const url = BASE_URL + "/observations/" + seriesName + "/json?recent=10";
+  // Convert `{ d, name: v }` to `{ date, value }` and sort oldest-to-newest.
+  return fetchData(url, OBSERVATIONS_SCHEMA, (data) =>
+    data.observations
+      .map((o) => ({
+        date: o.d,
+        value: Number(o[seriesName].v),
+      }))
+      .reverse()
+  );
+}
 </code></pre>
         </article>
     </section>
@@ -209,7 +174,7 @@ export const fetchObservations = (seriesName, callback) => {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Apr 03 2020 22:12:00 GMT-0700 (Pacific Daylight Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Apr 04 2020 14:02:58 GMT-0700 (Pacific Daylight Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
