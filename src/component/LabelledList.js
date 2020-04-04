@@ -11,20 +11,22 @@ export default function LabelledList(props) {
   };
 
   return (
-    <List style={{ maxHeight: props.maxHeight, overflow: "auto" }}>
-      {props.items.map((item, index) => {
-        return (
-          <ListItem
-            button
-            key={index}
-            selected={index == selectedIndex}
-            onClick={(event) => handleClick(event, index)}
-          >
-            <ListItemText primary={item.label} />
-          </ListItem>
-        );
-      })}
-    </List>
+    props.items.length > 0 && (
+      <List style={{ maxHeight: props.maxHeight, overflow: "auto" }}>
+        {props.items.map((item, index) => {
+          return (
+            <ListItem
+              button
+              key={index}
+              selected={index == selectedIndex}
+              onClick={(event) => handleClick(event, index)}
+            >
+              <ListItemText primary={item.label} />
+            </ListItem>
+          );
+        })}
+      </List>
+    )
   );
 }
 

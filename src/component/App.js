@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
+import ActionBar from "./ActionBar";
 import ContentGrid from "./ContentGrid";
 
 import { fetchGroups } from "../logic/api";
@@ -16,6 +17,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ActionBar />
       <ContentGrid groups={groups} />
     </ThemeProvider>
   );

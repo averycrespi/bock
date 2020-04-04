@@ -31,10 +31,8 @@ export default function ContentGrid(props) {
     fetchObservations(series.name, setObservations);
   };
 
-  if (Object.keys(props.groups).length == 0) {
-    return null;
-  } else {
-    return (
+  return (
+    Object.keys(props.groups).length > 0 && (
       <Grid container>
         <Grid item xs={3}>
           <LabelledList items={props.groups} onClick={handleGroupClick} />
@@ -55,8 +53,8 @@ export default function ContentGrid(props) {
           />
         </Grid>
       </Grid>
-    );
-  }
+    )
+  );
 }
 
 ContentGrid.propTypes = {
