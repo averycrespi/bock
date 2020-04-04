@@ -15,16 +15,20 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
+    "better-docs": "^1.4.7",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
+    "jsdoc": "^3.6.3",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.2"
   },
   "scripts": {
     "dev": "parcel public/index.html",
     "build": "parcel build public/index.html",
-    "fix": "eslint --fix src/**/*.js"
+    "fix": "eslint --fix src/**/*.js",
+    "docs": "jsdoc -c .jsdoc.json",
+    "serve": "python3 -m http.server 8000"
   }
 }

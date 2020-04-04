@@ -12,7 +12,12 @@ import {
   fetchObservations,
 } from "../logic/api";
 
-export default function ContentGrid(props) {
+/**
+ * Renders a grid of content.
+ *
+ * @component
+ */
+const ContentGrid = (props) => {
   const [groupDetails, setGroupDetails] = useState({});
   const [seriesDetails, setSeriesDetails] = useState({});
   const [observations, setObservations] = useState([]);
@@ -55,7 +60,7 @@ export default function ContentGrid(props) {
       </Grid>
     )
   );
-}
+};
 
 ContentGrid.propTypes = {
   groups: PropTypes.arrayOf(
@@ -66,3 +71,5 @@ ContentGrid.propTypes = {
     })
   ).isRequired,
 };
+
+export default ContentGrid;

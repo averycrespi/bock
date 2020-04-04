@@ -1,7 +1,12 @@
 import React from "react";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
-export default function ActionBar() {
+/**
+ * Renders an action bar.
+ *
+ * @component
+ */
+const ActionBar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -9,4 +14,6 @@ export default function ActionBar() {
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+export default ActionBar;

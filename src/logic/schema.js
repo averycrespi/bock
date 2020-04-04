@@ -1,3 +1,10 @@
+/**
+ * @module schema
+ */
+
+/**
+ * Validates data from the groups API endpoint.
+ */
 export const GROUPS_SCHEMA = {
   type: "object",
   properties: {
@@ -16,6 +23,9 @@ export const GROUPS_SCHEMA = {
   },
 };
 
+/**
+ * Validates data from the group details API endpoint.
+ */
 export const GROUP_DETAILS_SCHEMA = {
   type: "object",
   properties: {
@@ -42,6 +52,9 @@ export const GROUP_DETAILS_SCHEMA = {
   },
 };
 
+/**
+ * Validates data from the series details API endpoint.
+ */
 export const SERIES_DETAILS_SCHEMA = {
   type: "object",
   properties: {
@@ -56,6 +69,9 @@ export const SERIES_DETAILS_SCHEMA = {
   },
 };
 
+/**
+ * Validates data from the observations API endpoint.
+ */
 export const OBSERVATIONS_SCHEMA = {
   type: "object",
   properties: {

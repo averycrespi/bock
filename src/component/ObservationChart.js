@@ -3,7 +3,14 @@ import PropTypes from "prop-types";
 import { Line } from "react-chartjs-2";
 import { useTheme } from "@material-ui/core/styles";
 
-export default function ObservationChart(props) {
+/**
+ * Renders a chart of observations.
+ *
+ * If `observations` is empty, no chart is rendered.
+ *
+ * @component
+ */
+const ObservationChart = (props) => {
   const theme = useTheme();
 
   const chartData = {
@@ -21,7 +28,7 @@ export default function ObservationChart(props) {
   return (
     Object.keys(props.observations).length > 0 && <Line data={chartData} />
   );
-}
+};
 
 ObservationChart.propTypes = {
   details: PropTypes.shape({
@@ -33,3 +40,5 @@ ObservationChart.propTypes = {
     PropTypes.shape({ date: PropTypes.string, value: PropTypes.number })
   ).isRequired,
 };
+
+export default ObservationChart;

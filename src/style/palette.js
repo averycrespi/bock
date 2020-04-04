@@ -1,5 +1,14 @@
-// Colours from: https://design.bankofcanada.ca/design/colour-scheme/
-// Palette created by: https://material.io/resources/color/
+/**
+ * @module style
+ */
+
+/**
+ * Stores the UI colour palette.
+ *
+ * The colours were inspired by the [Bank of Canada](https://design.bankofcanada.ca/design/colour-scheme/).
+ *
+ * The palette was create by the [Material UI Color Tool](https://material.io/resources/color/).
+ */
 export const PALETTE = {
   primary: {
     light: "#FF2258", // Radical Red

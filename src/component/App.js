@@ -9,7 +9,12 @@ import { PALETTE } from "../style/palette";
 
 const theme = createMuiTheme({ palette: PALETTE });
 
-export default function App() {
+/**
+ * Renders the application.
+ *
+ * @component
+ */
+const App = () => {
   const [groups, setGroups] = useState([]);
 
   // Load groups when the component mounts.
@@ -21,4 +26,6 @@ export default function App() {
       <ContentGrid groups={groups} />
     </ThemeProvider>
   );
-}
+};
+
+export default App;
