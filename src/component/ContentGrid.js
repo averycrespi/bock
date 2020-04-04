@@ -24,7 +24,9 @@ const ContentGrid = (props) => {
 
   const handleGroupClick = (group) => {
     console.log("Clicked group: " + group.label);
-    fetchGroupDetails(group.name, setGroupDetails);
+    fetchGroupDetails(group.name)
+      .then((details) => setGroupDetails(details))
+      .catch(console.error);
     // Clear previous series details and observations.
     setSeriesDetails({});
     setObservations([]);
@@ -32,8 +34,12 @@ const ContentGrid = (props) => {
 
   const handleSeriesClick = (series) => {
     console.log("Clicked series: " + series.label);
-    fetchSeriesDetails(series.name, setSeriesDetails);
-    fetchObservations(series.name, setObservations);
+    fetchSeriesDetails(series.name)
+      .then((details) => setSeriesDetails(details))
+      .catch(console.error);
+    fetchObservations(series.name)
+      .then((observations) => setObservations(observations))
+      .catch(console.error);
   };
 
   return (

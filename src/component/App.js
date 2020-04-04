@@ -18,7 +18,12 @@ const App = () => {
   const [groups, setGroups] = useState([]);
 
   // Load groups when the component mounts.
-  useEffect(() => fetchGroups(setGroups), []);
+  useEffect(() => {
+    fetchGroups()
+      .then((groups) => setGroups(groups))
+      .catch(console.error);
+    return; // Avoid useEffect async warning.
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
