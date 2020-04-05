@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
 
-import LabelledList from "./LabelledList";
 import DetailsCard from "./DetailsCard";
+import TextFilter from "./TextFilter";
+import LabelledList from "./LabelledList";
 import ObservationChart from "./ObservationChart";
 
 import {
@@ -18,9 +19,17 @@ import {
  * @component
  */
 const ContentGrid = (props) => {
+  const [filteredGroups, setFilteredGroups] = useState([]);
   const [groupDetails, setGroupDetails] = useState({});
   const [seriesDetails, setSeriesDetails] = useState({});
   const [observations, setObservations] = useState([]);
+
+  const handleGroupFilterChange = (query) => {
+    setFilteredGroups(
+      props.groups.filter((group) => RegExp(query, "i").test(group.label))
+    );
+    console.log("Filtered groups by query: " + query);
+  };
 
   const handleGroupClick = (group) => {
     console.log("Clicked group: " + group.label);
@@ -46,7 +55,8 @@ const ContentGrid = (props) => {
     Object.keys(props.groups).length > 0 && (
       <Grid container>
         <Grid item xs={3}>
-          <LabelledList items={props.groups} onClick={handleGroupClick} />
+          <TextFilter onChange={handleGroupFilterChange} />
+          <LabelledList items={filteredGroups} onClick={handleGroupClick} />
         </Grid>
         <Grid item xs={3}>
           <DetailsCard details={groupDetails} />
