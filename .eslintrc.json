@@ -1,13 +1,14 @@
-// Based on https://dev.to/chgldev/getting-prettier-eslint-and-vscode-to-work-together-3678
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "extends": [
     "plugin:prettier/recommended",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:jest/recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -20,8 +21,10 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
-  "rules": { "prettier/prettier": "error" },
+  "plugins": ["react", "prettier", "jest"],
+  "rules": {
+    "prettier/prettier": "error"
+  },
   "settings": {
     "react": {
       "version": "detect"
