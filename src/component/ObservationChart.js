@@ -21,6 +21,7 @@ const ObservationChart = (props) => {
         data: props.observations.map((o) => o.value),
         borderColor: theme.palette.primary.main,
         backgroundColor: "#00000000", // Transparent
+        lineTension: 0,
       },
     ],
   };
