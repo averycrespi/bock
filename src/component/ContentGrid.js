@@ -78,13 +78,14 @@ const ContentGrid = (props) => {
         </Grid>
         <Grid item xs={6}>
           {Object.keys(seriesDetails).length > 0 && (
+            <div>
               <DetailsCard details={seriesDetails} />
-            ) && (
               <ObservationChart
                 details={seriesDetails}
                 observations={observations}
               />
-            )}
+            </div>
+          )}
         </Grid>
       </Grid>
     )
