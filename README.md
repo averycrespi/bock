@@ -16,6 +16,8 @@
     <a href="#license">License</a>
 </p>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0607ab48-c363-41a1-821f-022f4f4c8784/deploy-status)](https://app.netlify.com/sites/bock/deploys)
+
 > /bäk/
 >
 > _noun_
