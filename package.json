@@ -32,6 +32,6 @@
     "build": "parcel build public/index.html",
     "fix": "eslint --fix src/**/*.js",
     "docs": "jsdoc -c .jsdoc.json",
-    "serve": "python3 -m http.server 8000"
+    "serve": "cd docs && python3 -m http.server 8000"
   }
 }
