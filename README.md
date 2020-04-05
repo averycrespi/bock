@@ -18,9 +18,13 @@
 
 > /bäk/
 >
-> *noun*
+> _noun_
 >
 > A strong dark beer brewed in the fall and drunk in the spring.
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/averycrespi/bock/master/public/screenshot.png" width="600"/>
+</p>
 
 ## Features
 
@@ -50,6 +54,7 @@ It's a [backronym](https://en.wikipedia.org/wiki/Backronym) for **B**ank **o**f 
 This project uses the Bank of Canada's [Valet API](https://www.bankofcanada.ca/valet/docs). By using this project, you agree to their [Terms of Service](https://www.bankofcanada.ca/terms/).
 
 Logo derived from:
+
 - Beer by Curve from the Noun Project
 - leaf by Hopkins from the Noun Project
 
