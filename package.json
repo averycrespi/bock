@@ -18,11 +18,19 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "babel-jest": "^25.2.6",
     "better-docs": "^1.4.7",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.7",
+    "jest-fetch-mock": "^3.0.3",
     "jsdoc": "^3.6.3",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.2"
@@ -32,6 +40,19 @@
     "build": "parcel build public/index.html",
     "fix": "eslint --fix src/**/*.js",
     "docs": "jsdoc -c .jsdoc.json",
-    "serve": "cd docs && python3 -m http.server 8000"
+    "serve": "cd docs && python3 -m http.server 8000",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test"
+    }
+  },
+  "jest": {
+    "automock": false,
+    "silent": true,
+    "setupFiles": [
+      "./setup.js"
+    ]
   }
 }
