@@ -68,3 +68,6 @@ dist/
 
 # Editor configuration
 .vscode/
+
+# JSDoc docs
+docs/
