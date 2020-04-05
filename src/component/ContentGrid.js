@@ -21,20 +21,24 @@ import {
 const ContentGrid = (props) => {
   const [filteredGroups, setFilteredGroups] = useState([]);
   const [groupDetails, setGroupDetails] = useState({});
+  const [groupSeries, setGroupSeries] = useState([]);
   const [seriesDetails, setSeriesDetails] = useState({});
   const [observations, setObservations] = useState([]);
 
-  const handleGroupFilterChange = (query) => {
+  const handleFilterChange = (query) => {
+    console.log("Filtered groups by query: " + query);
     setFilteredGroups(
       props.groups.filter((group) => RegExp(query, "i").test(group.label))
     );
-    console.log("Filtered groups by query: " + query);
   };
 
   const handleGroupClick = (group) => {
     console.log("Clicked group: " + group.label);
     fetchGroupDetails(group.name)
-      .then((details) => setGroupDetails(details))
+      .then((details) => {
+        setGroupDetails(details);
+        setGroupSeries(details.series);
+      })
       .catch(console.error);
     // Clear previous series details and observations.
     setSeriesDetails({});
@@ -55,23 +59,32 @@ const ContentGrid = (props) => {
     Object.keys(props.groups).length > 0 && (
       <Grid container>
         <Grid item xs={3}>
-          <TextFilter onChange={handleGroupFilterChange} />
-          <LabelledList items={filteredGroups} onClick={handleGroupClick} />
+          <TextFilter onChange={handleFilterChange} />
+          {filteredGroups.length > 0 && (
+            <LabelledList items={filteredGroups} onClick={handleGroupClick} />
+          )}
         </Grid>
         <Grid item xs={3}>
-          <DetailsCard details={groupDetails} />
-          <LabelledList
-            items={groupDetails.series || []}
-            onClick={handleSeriesClick}
-            maxHeight="50vh"
-          />
+          {Object.keys(groupDetails).length > 0 && (
+            <DetailsCard details={groupDetails} />
+          )}
+          {groupSeries.length > 0 && (
+            <LabelledList
+              items={groupSeries}
+              onClick={handleSeriesClick}
+              maxHeight="50vh"
+            />
+          )}
         </Grid>
         <Grid item xs={6}>
-          <DetailsCard details={seriesDetails} />
-          <ObservationChart
-            details={seriesDetails}
-            observations={observations}
-          />
+          {Object.keys(seriesDetails).length > 0 && (
+              <DetailsCard details={seriesDetails} />
+            ) && (
+              <ObservationChart
+                details={seriesDetails}
+                observations={observations}
+              />
+            )}
         </Grid>
       </Grid>
     )

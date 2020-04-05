@@ -6,8 +6,6 @@ import { useTheme } from "@material-ui/core/styles";
 /**
  * Renders a chart of observations.
  *
- * If `observations` is empty, no chart is rendered.
- *
  * @component
  */
 const ObservationChart = (props) => {
@@ -26,9 +24,7 @@ const ObservationChart = (props) => {
     ],
   };
 
-  return (
-    Object.keys(props.observations).length > 0 && <Line data={chartData} />
-  );
+  return <Line data={chartData} />;
 };
 
 ObservationChart.propTypes = {

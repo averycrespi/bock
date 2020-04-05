@@ -5,24 +5,17 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 /**
  * Renders a card with details.
  *
- * If `details` is empty, no card is rendered.
- *
  * @component
  */
 const DetailsCard = (props) => {
-  if (Object.keys(props.details).length == 0) {
-    return null;
-  }
   return (
-    <div>
-      <Card>
-        <CardContent>
-          <Typography variant="h6">{props.details.label}</Typography>
-          <Typography variant="caption">{props.details.name}</Typography>
-          <Typography variant="body1">{props.details.description}</Typography>
-        </CardContent>
-      </Card>
-    </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h6">{props.details.label}</Typography>
+        <Typography variant="caption">{props.details.name}</Typography>
+        <Typography variant="body1">{props.details.description}</Typography>
+      </CardContent>
+    </Card>
   );
 };
 
