@@ -41,6 +41,9 @@ Requires [Git](https://git-scm.com/) and the [Yarn](https://yarnpkg.com/) packag
 # Clone the repository
 git clone https://github.com/averycrespi/bock.git && cd bock
 
+# Install dependencies
+yarn install
+
 # Start the development server
 yarn dev
 ```
