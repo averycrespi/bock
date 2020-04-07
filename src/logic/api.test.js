@@ -37,6 +37,23 @@ describe("test API", () => {
     ]);
   });
 
+  test("fetch groups with empty labels", () => {
+    fetch.once(
+      JSON.stringify({
+        terms: {
+          url: "https://www.bankofcanada.ca/terms/",
+        },
+        groups: {
+          "sdp-2012-8": {
+            label: " ",
+            link: "https://www.bankofcanada.ca/valet/groups/sdp-2012-8",
+          },
+        },
+      })
+    );
+    return expect(fetchGroups()).resolves.toStrictEqual([]);
+  });
+
   test("fetch group details", () => {
     fetch.once(
       JSON.stringify({
