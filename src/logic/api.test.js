@@ -1,6 +1,6 @@
 import { fetchGroups, fetchGroupDetails, fetchSeriesDetails } from "./api";
 
-describe("testing api", () => {
+describe("test API", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
@@ -16,6 +16,10 @@ describe("testing api", () => {
             label: "Staff Discussion Paper 2012-8",
             link: "https://www.bankofcanada.ca/valet/groups/sdp-2012-8",
           },
+          "swp-2012-37": {
+            label: "Staff Working Paper 2012-37",
+            link: "https://www.bankofcanada.ca/valet/groups/swp-2012-37",
+          },
         },
       })
     );
@@ -24,6 +28,11 @@ describe("testing api", () => {
         name: "sdp-2012-8",
         label: "Staff Discussion Paper 2012-8",
         link: "https://www.bankofcanada.ca/valet/groups/sdp-2012-8",
+      },
+      {
+        name: "swp-2012-37",
+        label: "Staff Working Paper 2012-37",
+        link: "https://www.bankofcanada.ca/valet/groups/swp-2012-37",
       },
     ]);
   });
@@ -44,6 +53,10 @@ describe("testing api", () => {
               label: "AUD/CAD",
               link: "https://www.bankofcanada.ca/valet/series/FXAUDCAD",
             },
+            FXBRLCAD: {
+              label: "BRL/CAD",
+              link: "https://www.bankofcanada.ca/valet/series/FXBRLCAD",
+            },
           },
         },
       })
@@ -59,6 +72,11 @@ describe("testing api", () => {
           name: "FXAUDCAD",
           label: "AUD/CAD",
           link: "https://www.bankofcanada.ca/valet/series/FXAUDCAD",
+        },
+        {
+          name: "FXBRLCAD",
+          label: "BRL/CAD",
+          link: "https://www.bankofcanada.ca/valet/series/FXBRLCAD",
         },
       ],
     });
@@ -82,9 +100,15 @@ describe("testing api", () => {
         },
         observations: [
           {
-            d: "2020-04-03",
+            d: "2020-04-07",
             FXUSDCAD: {
-              v: "1.4142",
+              v: "1.3986",
+            },
+          },
+          {
+            d: "2020-04-06",
+            FXUSDCAD: {
+              v: "1.4127",
             },
           },
         ],
@@ -94,7 +118,10 @@ describe("testing api", () => {
       name: "FXUSDCAD",
       label: "USD/CAD",
       description: "US dollar to Canadian dollar daily exchange rate",
-      observations: [{ date: "2020-04-03", value: 1.4142 }],
+      observations: [
+        { date: "2020-04-06", value: 1.4127 },
+        { date: "2020-04-07", value: 1.3986 },
+      ],
     });
   });
 });
