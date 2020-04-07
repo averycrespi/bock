@@ -23,12 +23,34 @@ async function fetchData(url, schema, transform) {
   }
 }
 
-// Flatten `{ name: { ...values } }` to `[ { name, ...values } ]`.
-const flattenGroups = (groups) =>
-  Object.entries(groups).map(([k, v]) => ({ name: k, ...v }));
+// Flatten the names of groups or series.
+// Converts from `{ name: { ...values } }` to `[ { name, ...values } ]`.
+const flattenNames = (obj) =>
+  Object.entries(obj).map(([k, v]) => ({ name: k, ...v }));
+
+// Flatten the dates and values of observations.
+// Converts `{ { d, name: v } }` to `[ { date, value } ]`.
+const flattenDates = (observations, seriesName) =>
+  observations.map((o) => ({
+    date: o.d,
+    value: Number(o[seriesName].v),
+  }));
+
+// Compare the labels of two groups or series.
+const compareLabels = (a, b) => {
+  if (a.label < b.label) {
+    return -1;
+  } else if (a.label > b.label) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
 
 /**
  * Fetch groups from the API.
+ *
+ * Groups will be returned in alphabetical order by label.
  *
  * @method
  * @returns {Promise} Array of group objects
@@ -37,16 +59,16 @@ const flattenGroups = (groups) =>
 export async function fetchGroups() {
   console.debug("Fetching groups ...");
   const url = BASE_URL + "/lists/groups/json";
-  return fetchData(url, GROUPS_SCHEMA, (data) => flattenGroups(data.groups));
+  return fetchData(url, GROUPS_SCHEMA, (data) =>
+    flattenNames(data.groups).sort(compareLabels)
+  );
 }
-
-// Flatten `{ name: { ...values } }` to `[ { name, ...values } ]`.
-const flattenSeries = (series) =>
-  Object.entries(series).map(([k, v]) => ({ name: k, ...v }));
 
 /**
  * Fetch group details from the API.
- * *
+ *
+ * Series will be returned in alphabetical order by label.
+ *
  * @method
  * @param {String} groupName Name of the group
  * @returns {Promise} Group details object
@@ -59,19 +81,14 @@ export async function fetchGroupDetails(groupName) {
     name: data.groupDetails.name,
     label: data.groupDetails.label,
     description: data.groupDetails.description,
-    series: flattenSeries(data.groupDetails.groupSeries),
+    series: flattenNames(data.groupDetails.groupSeries).sort(compareLabels),
   }));
 }
 
-// Flatten `{ { d, name: v } }` to `[ { date, value } ]`.
-const flattenObservations = (observations, seriesName) =>
-  observations.map((o) => ({
-    date: o.d,
-    value: Number(o[seriesName].v),
-  }));
-
 /**
  * Fetch series details from the API.
+ *
+ * Observations will be returned in chronological order by date.
  *
  * @method
  * @param {String} seriesName Name of the series
@@ -85,6 +102,6 @@ export async function fetchSeriesDetails(seriesName) {
     name: seriesName,
     label: data.seriesDetail[seriesName].label,
     description: data.seriesDetail[seriesName].description,
-    observations: flattenObservations(data.observations, seriesName).reverse(),
+    observations: flattenDates(data.observations, seriesName).reverse(),
   }));
 }
