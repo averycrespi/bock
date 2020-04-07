@@ -18,7 +18,7 @@ const TextFilter = (props) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       props.onChange(query);
-    }, 500);
+    }, 300);
   };
 
   return (
