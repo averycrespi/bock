@@ -22,18 +22,19 @@ const ContentGrid = (props) => {
   const [observations, setObservations] = useState([]);
 
   const handleFilterChange = (query) => {
-    console.log("Filtered groups by query: " + query);
+    console.debug("Filtered groups by query: " + query);
     setFilteredGroups(
       props.groups.filter((group) => RegExp(query, "i").test(group.label))
     );
   };
 
   const handleGroupClick = (group) => {
-    console.log("Clicked group: " + group.label);
+    console.debug("Clicked group: " + group.label);
     fetchGroupDetails(group.name)
       .then((details) => {
         setGroupDetails(details);
         setGroupSeries(details.series);
+        console.debug(details);
       })
       .catch(console.error);
     // Clear previous series details and observations.
@@ -42,11 +43,12 @@ const ContentGrid = (props) => {
   };
 
   const handleSeriesClick = (series) => {
-    console.log("Clicked series: " + series.label);
+    console.debug("Clicked series: " + series.label);
     fetchSeriesDetails(series.name)
       .then((details) => {
         setSeriesDetails(details);
         setObservations(details.observations);
+        console.debug(details);
       })
       .catch(console.error);
   };

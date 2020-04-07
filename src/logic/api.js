@@ -11,6 +11,7 @@ import {
 const BASE_URL = "https://www.bankofcanada.ca/valet";
 
 async function fetchData(url, schema, transform) {
+  console.debug("Fetching data from url: " + url + " ...");
   const response = await fetch(url);
   const data = await response.json();
   const validator = new Validator();
@@ -34,7 +35,7 @@ const flattenGroups = (groups) =>
  * @throws Will throw an error if fetching, parsing, or validation fails
  */
 export async function fetchGroups() {
-  console.log("Fetching groups ...");
+  console.debug("Fetching groups ...");
   const url = BASE_URL + "/lists/groups/json";
   return fetchData(url, GROUPS_SCHEMA, (data) => flattenGroups(data.groups));
 }
@@ -52,7 +53,7 @@ const flattenSeries = (series) =>
  * @throws Will throw an error if fetching, parsing, or validation fails
  */
 export async function fetchGroupDetails(groupName) {
-  console.log("Fetching details for group: " + groupName + " ...");
+  console.debug("Fetching details for group: " + groupName + " ...");
   const url = BASE_URL + "/groups/" + groupName + "/json";
   return fetchData(url, GROUP_DETAILS_SCHEMA, (data) => ({
     name: data.groupDetails.name,
@@ -78,7 +79,7 @@ const flattenObservations = (observations, seriesName) =>
  * @throws Will throw an error if fetching, parsing, or validation fails
  */
 export async function fetchSeriesDetails(seriesName) {
-  console.log("Fetching details for series: " + seriesName + " ...");
+  console.debug("Fetching details for series: " + seriesName + " ...");
   const url = BASE_URL + "/observations/" + seriesName + "/json?recent=10";
   return fetchData(url, OBSERVATIONS_SCHEMA, (data) => ({
     name: seriesName,

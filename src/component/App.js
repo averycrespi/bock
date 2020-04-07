@@ -20,7 +20,10 @@ const App = () => {
   // Load groups when the component mounts.
   useEffect(() => {
     fetchGroups()
-      .then((groups) => setGroups(groups))
+      .then((groups) => {
+        setGroups(groups);
+        console.debug(groups);
+      })
       .catch(console.error);
     return; // Avoid useEffect async warning.
   }, []);
