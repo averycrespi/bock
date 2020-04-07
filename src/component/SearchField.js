@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { TextField } from "@material-ui/core";
 
 /**
- * Renders a text filter.
+ * Renders a search field.
  *
  * @component
  */
-const TextFilter = (props) => {
+const SearchField = (props) => {
   let timeout = null;
 
   // Send an empty query when the component mounts.
@@ -22,12 +22,17 @@ const TextFilter = (props) => {
   };
 
   return (
-    <TextField placeholder="Query" fullWidth={true} onChange={handleChange} />
+    <TextField
+      placeholder={props.placeholder}
+      fullWidth={true}
+      onChange={handleChange}
+    />
   );
 };
 
-TextFilter.propTypes = {
+SearchField.propTypes = {
+  placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-export default TextFilter;
+export default SearchField;

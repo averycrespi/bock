@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
 
 import DetailsCard from "./DetailsCard";
-import TextFilter from "./TextFilter";
+import SearchField from "./SearchField";
 import LabelledList from "./LabelledList";
 import ObservationChart from "./ObservationChart";
 
@@ -57,7 +57,7 @@ const ContentGrid = (props) => {
     Object.keys(props.groups).length > 0 && (
       <Grid container>
         <Grid item xs={3}>
-          <TextFilter onChange={handleFilterChange} />
+          <SearchField placeholder="Search" onChange={handleFilterChange} />
           {filteredGroups.length > 0 && (
             <LabelledList items={filteredGroups} onClick={handleGroupClick} />
           )}
