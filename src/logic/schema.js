@@ -51,28 +51,23 @@ export const GROUP_DETAILS_SCHEMA = {
 };
 
 /**
- * Validates data from the series details API endpoint.
- */
-export const SERIES_DETAILS_SCHEMA = {
-  type: "object",
-  properties: {
-    seriesDetails: {
-      type: "object",
-      properties: {
-        name: { type: "string" },
-        label: { type: "string" },
-        description: { type: "string" },
-      },
-    },
-  },
-};
-
-/**
- * Validates data from the observations API endpoint.
+ * Validates data from the observations API endpoint, which includes series details.
  */
 export const OBSERVATIONS_SCHEMA = {
   type: "object",
   properties: {
+    seriesDetail: {
+      type: "object",
+      patternProperties: {
+        "^.*": {
+          type: "object",
+          properties: {
+            label: { type: "string" },
+            description: { type: "string" },
+          },
+        },
+      },
+    },
     observations: {
       type: "array",
       items: {

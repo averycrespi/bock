@@ -7,11 +7,7 @@ import TextFilter from "./TextFilter";
 import LabelledList from "./LabelledList";
 import ObservationChart from "./ObservationChart";
 
-import {
-  fetchGroupDetails,
-  fetchSeriesDetails,
-  fetchObservations,
-} from "../logic/api";
+import { fetchGroupDetails, fetchSeriesDetails } from "../logic/api";
 
 /**
  * Renders a grid of content.
@@ -48,10 +44,10 @@ const ContentGrid = (props) => {
   const handleSeriesClick = (series) => {
     console.log("Clicked series: " + series.label);
     fetchSeriesDetails(series.name)
-      .then((details) => setSeriesDetails(details))
-      .catch(console.error);
-    fetchObservations(series.name)
-      .then((observations) => setObservations(observations))
+      .then((details) => {
+        setSeriesDetails(details);
+        setObservations(details.observations);
+      })
       .catch(console.error);
   };
 
