@@ -1,9 +1,4 @@
-import {
-  fetchGroups,
-  fetchGroupDetails,
-  fetchSeriesDetails,
-  fetchObservations,
-} from "./api";
+import { fetchGroups, fetchGroupDetails, fetchSeriesDetails } from "./api";
 
 describe("testing api", () => {
   beforeEach(() => {
@@ -75,27 +70,6 @@ describe("testing api", () => {
         terms: {
           url: "https://www.bankofcanada.ca/terms/",
         },
-        seriesDetails: {
-          name: "FXAUDCAD",
-          label: "AUD/CAD",
-          description:
-            "Australian dollar to Canadian dollar daily exchange rate",
-        },
-      })
-    );
-    return expect(fetchSeriesDetails("FXAUDCAD")).resolves.toStrictEqual({
-      name: "FXAUDCAD",
-      label: "AUD/CAD",
-      description: "Australian dollar to Canadian dollar daily exchange rate",
-    });
-  });
-
-  test("fetch observations", () => {
-    fetch.once(
-      JSON.stringify({
-        terms: {
-          url: "https://www.bankofcanada.ca/terms/",
-        },
         seriesDetail: {
           FXUSDCAD: {
             label: "USD/CAD",
@@ -116,8 +90,11 @@ describe("testing api", () => {
         ],
       })
     );
-    return expect(fetchObservations("FXUSDCAD")).resolves.toStrictEqual([
-      { date: "2020-04-03", value: 1.4142 },
-    ]);
+    return expect(fetchSeriesDetails("FXUSDCAD")).resolves.toStrictEqual({
+      name: "FXUSDCAD",
+      label: "USD/CAD",
+      description: "US dollar to Canadian dollar daily exchange rate",
+      observations: [{ date: "2020-04-03", value: 1.4142 }],
+    });
   });
 });
