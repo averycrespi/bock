@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import ActionBar from "./ActionBar";
-import ContentGrid from "./ContentGrid";
+import ContentGrid from "./content/ContentGrid";
 
 import { fetchGroups } from "../logic/api";
 import { PALETTE } from "../style/palette";

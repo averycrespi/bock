@@ -21,8 +21,8 @@ const DetailsCard = (props) => {
 
 DetailsCard.propTypes = {
   details: PropTypes.shape({
-    label: PropTypes.string,
     name: PropTypes.string,
+    label: PropTypes.string,
     description: PropTypes.string,
   }).isRequired,
 };

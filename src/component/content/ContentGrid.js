@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
 
-import DetailsCard from "./DetailsCard";
-import SearchField from "./SearchField";
-import LabelledList from "./LabelledList";
-import ObservationChart from "./ObservationChart";
+import GroupContent from "./GroupContent";
+import SeriesContent from "./SeriesContent";
 
-import { fetchGroupDetails, fetchSeriesDetails } from "../logic/api";
+import SearchField from "./shared/SearchField";
+import LabelledList from "./shared/LabelledList";
+
+import { fetchGroupDetails, fetchSeriesDetails } from "../../logic/api";
+
+const isEmpty = (obj) => Object.keys(obj).length == 0;
 
 /**
  * Renders a grid of content.
@@ -17,9 +20,7 @@ import { fetchGroupDetails, fetchSeriesDetails } from "../logic/api";
 const ContentGrid = (props) => {
   const [filteredGroups, setFilteredGroups] = useState([]);
   const [groupDetails, setGroupDetails] = useState({});
-  const [groupSeries, setGroupSeries] = useState([]);
   const [seriesDetails, setSeriesDetails] = useState({});
-  const [observations, setObservations] = useState([]);
 
   const handleFilterChange = (query) => {
     console.debug("Filtered groups by query: " + query);
@@ -33,13 +34,10 @@ const ContentGrid = (props) => {
     fetchGroupDetails(group.name)
       .then((details) => {
         setGroupDetails(details);
-        setGroupSeries(details.series);
+        setSeriesDetails({});
         console.debug(details);
       })
       .catch(console.error);
-    // Clear previous series details and observations.
-    setSeriesDetails({});
-    setObservations([]);
   };
 
   const handleSeriesClick = (series) => {
@@ -47,7 +45,6 @@ const ContentGrid = (props) => {
     fetchSeriesDetails(series.name)
       .then((details) => {
         setSeriesDetails(details);
-        setObservations(details.observations);
         console.debug(details);
       })
       .catch(console.error);
@@ -63,27 +60,15 @@ const ContentGrid = (props) => {
           )}
         </Grid>
         <Grid item xs={3}>
-          {Object.keys(groupDetails).length > 0 && (
-            <DetailsCard details={groupDetails} />
-          )}
-          {groupSeries.length > 0 && (
-            <LabelledList
-              items={groupSeries}
-              onClick={handleSeriesClick}
-              maxHeight="50vh"
+          {!isEmpty(groupDetails) && (
+            <GroupContent
+              details={groupDetails}
+              onSeriesClick={handleSeriesClick}
             />
           )}
         </Grid>
         <Grid item xs={6}>
-          {Object.keys(seriesDetails).length > 0 && (
-            <div>
-              <DetailsCard details={seriesDetails} />
-              <ObservationChart
-                details={seriesDetails}
-                observations={observations}
-              />
-            </div>
-          )}
+          {!isEmpty(seriesDetails) && <SeriesContent details={seriesDetails} />}
         </Grid>
       </Grid>
     )

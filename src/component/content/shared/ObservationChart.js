@@ -29,8 +29,8 @@ const ObservationChart = (props) => {
 
 ObservationChart.propTypes = {
   details: PropTypes.shape({
-    label: PropTypes.string,
     name: PropTypes.string,
+    label: PropTypes.string,
     description: PropTypes.string,
   }).isRequired,
   observations: PropTypes.arrayOf(
