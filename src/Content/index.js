@@ -2,22 +2,20 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
 
-import GroupContent from "./GroupContent";
-import SeriesContent from "./SeriesContent";
+import Search from "./Search";
+import Group from "./Group";
+import Series from "./Series";
 
-import SearchField from "./shared/SearchField";
-import LabelledList from "./shared/LabelledList";
-
-import { fetchGroupDetails, fetchSeriesDetails } from "../../logic/api";
+import { fetchGroupDetails, fetchSeriesDetails } from "./fetch";
 
 const isEmpty = (obj) => Object.keys(obj).length == 0;
 
 /**
- * Renders a grid of content.
+ * Renders the application content.
  *
  * @component
  */
-const ContentGrid = (props) => {
+const Content = (props) => {
   const [filteredGroups, setFilteredGroups] = useState([]);
   const [groupDetails, setGroupDetails] = useState({});
   const [seriesDetails, setSeriesDetails] = useState({});
@@ -54,28 +52,26 @@ const ContentGrid = (props) => {
     Object.keys(props.groups).length > 0 && (
       <Grid container>
         <Grid item xs={3}>
-          <SearchField placeholder="Search" onChange={handleFilterChange} />
-          {filteredGroups.length > 0 && (
-            <LabelledList items={filteredGroups} onClick={handleGroupClick} />
-          )}
+          <Search
+            filtered={filteredGroups}
+            onFilterChange={handleFilterChange}
+            onGroupClick={handleGroupClick}
+          />
         </Grid>
         <Grid item xs={3}>
           {!isEmpty(groupDetails) && (
-            <GroupContent
-              details={groupDetails}
-              onSeriesClick={handleSeriesClick}
-            />
+            <Group details={groupDetails} onSeriesClick={handleSeriesClick} />
           )}
         </Grid>
         <Grid item xs={6}>
-          {!isEmpty(seriesDetails) && <SeriesContent details={seriesDetails} />}
+          {!isEmpty(seriesDetails) && <Series details={seriesDetails} />}
         </Grid>
       </Grid>
     )
   );
 };
 
-ContentGrid.propTypes = {
+Content.propTypes = {
   groups: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -85,4 +81,4 @@ ContentGrid.propTypes = {
   ).isRequired,
 };
 
-export default ContentGrid;
+export default Content;

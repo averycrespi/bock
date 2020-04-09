@@ -1,28 +1,7 @@
-/** @module schema */
-
-/**
- * Validates data from the groups API endpoint.
- */
-export const GROUPS_SCHEMA = {
-  type: "object",
-  properties: {
-    groups: {
-      type: "object",
-      patternProperties: {
-        "^.*": {
-          type: "object",
-          properties: {
-            label: { type: "string" },
-            link: { type: "string" },
-          },
-        },
-      },
-    },
-  },
-};
-
 /**
  * Validates data from the group details API endpoint.
+ *
+ * @constant
  */
 export const GROUP_DETAILS_SCHEMA = {
   type: "object",
@@ -52,6 +31,8 @@ export const GROUP_DETAILS_SCHEMA = {
 
 /**
  * Validates data from the observations API endpoint, which includes series details.
+ *
+ * @constant
  */
 export const OBSERVATIONS_SCHEMA = {
   type: "object",

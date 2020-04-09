@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import ContentGrid from "./content/ContentGrid";
+import Content from "../Content";
 
-import { fetchGroups } from "../logic/api";
-import { PALETTE } from "../style/palette";
+import { fetchGroups } from "./fetch";
+import { PALETTE } from "./palette";
 
 const theme = createMuiTheme({ palette: PALETTE });
 
@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ContentGrid groups={groups} />
+      <Content groups={groups} />
     </ThemeProvider>
   );
 };

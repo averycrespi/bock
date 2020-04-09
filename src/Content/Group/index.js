@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import DetailsCard from "./shared/DetailsCard";
-import LabelledList from "./shared/LabelledList";
+import DetailsCard from "../DetailsCard";
+import LabelledList from "../LabelledList";
 
 /**
  * Renders group content.
  *
  * @component
  */
-const GroupContent = (props) => {
+const Group = (props) => {
   return (
     <div>
       <DetailsCard details={props.details} />
@@ -22,7 +22,7 @@ const GroupContent = (props) => {
   );
 };
 
-GroupContent.propTypes = {
+Group.propTypes = {
   details: PropTypes.shape({
     name: PropTypes.string,
     label: PropTypes.string,
@@ -32,4 +32,4 @@ GroupContent.propTypes = {
   onSeriesClick: PropTypes.func.isRequired,
 };
 
-export default GroupContent;
+export default Group;

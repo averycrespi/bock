@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import DetailsCard from "./shared/DetailsCard";
-import ObservationChart from "./shared/ObservationChart";
+import DetailsCard from "../DetailsCard";
+import ObservationChart from "./ObservationChart";
 
 /**
  * Renders series content.
  *
  * @component
  */
-const SeriesContent = (props) => {
+const Series = (props) => {
   return (
     <div>
       <DetailsCard details={props.details} />
@@ -21,7 +21,7 @@ const SeriesContent = (props) => {
   );
 };
 
-SeriesContent.propTypes = {
+Series.propTypes = {
   details: PropTypes.shape({
     name: PropTypes.string,
     label: PropTypes.string,
@@ -30,4 +30,4 @@ SeriesContent.propTypes = {
   }).isRequired,
 };
 
-export default SeriesContent;
+export default Series;
