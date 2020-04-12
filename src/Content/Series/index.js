@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import DetailsCard from "../DetailsCard";
 import ObservationChart from "./ObservationChart";
+import ObservationTable from "./ObservationTable";
 
 /**
  * Renders series content.
@@ -17,6 +18,7 @@ const Series = (props) => {
         details={props.details}
         observations={props.details.observations}
       />
+      <ObservationTable observations={props.details.observations} />
     </div>
   );
 };
