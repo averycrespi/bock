@@ -14,7 +14,11 @@ const Search = (props) => {
     <div>
       <SearchField placeholder="Search" onChange={props.onFilterChange} />
       {props.filtered.length > 0 && (
-        <LabelledList items={props.filtered} onClick={props.onGroupClick} />
+        <LabelledList
+          items={props.filtered}
+          maxHeight="90vh"
+          onClick={props.onGroupClick}
+        />
       )}
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import Content from "../Content";
+import Footer from "../Footer";
 
 import { fetchGroups } from "./fetch";
 import { PALETTE } from "./palette";
@@ -30,6 +31,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Content groups={groups} />
+      {groups.length > 0 && <Footer />}
     </ThemeProvider>
   );
 };
