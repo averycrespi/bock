@@ -15,6 +15,7 @@ const Group = (props) => {
       <DetailsCard details={props.details} />
       <LabelledList
         items={props.details.series}
+        selectedIndex={props.selectedIndex}
         onClick={props.onSeriesClick}
         maxHeight="50vh"
       />
@@ -29,6 +30,7 @@ Group.propTypes = {
     description: PropTypes.string,
     series: PropTypes.array,
   }).isRequired,
+  selectedIndex: PropTypes.number.isRequired,
   onSeriesClick: PropTypes.func.isRequired,
 };
 

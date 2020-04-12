@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
@@ -8,11 +8,8 @@ import { List, ListItem, ListItemText } from "@material-ui/core";
  * @component
  */
 const LabelledList = (props) => {
-  const [selectedIndex, setSelectedIndex] = useState();
-
   const handleClick = (index) => {
-    props.onClick(props.items[index]);
-    setSelectedIndex(index);
+    props.onClick(props.items[index], index);
   };
 
   return (
@@ -21,7 +18,7 @@ const LabelledList = (props) => {
         <ListItem
           button
           key={index}
-          selected={index == selectedIndex}
+          selected={index == props.selectedIndex}
           onClick={() => handleClick(index)}
         >
           <ListItemText primary={item.label} />
@@ -34,6 +31,7 @@ const LabelledList = (props) => {
 LabelledList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string }))
     .isRequired,
+  selectedIndex: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
   maxHeight: PropTypes.string,
 };

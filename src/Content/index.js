@@ -17,18 +17,23 @@ const isEmpty = (obj) => Object.keys(obj).length == 0;
  */
 const Content = (props) => {
   const [filteredGroups, setFilteredGroups] = useState([]);
+  const [groupIndex, setGroupIndex] = useState(null);
   const [groupDetails, setGroupDetails] = useState({});
+  const [seriesIndex, setSeriesIndex] = useState(null);
   const [seriesDetails, setSeriesDetails] = useState({});
 
   const handleFilterChange = (query) => {
     console.debug("Filtered groups by query: " + query);
+    setGroupIndex(null);
     setFilteredGroups(
       props.groups.filter((group) => RegExp(query, "i").test(group.label))
     );
   };
 
-  const handleGroupClick = (group) => {
+  const handleGroupClick = (group, index) => {
     console.debug("Clicked group: " + group.label);
+    setGroupIndex(index);
+    setSeriesIndex(null);
     fetchGroupDetails(group.name)
       .then((details) => {
         setGroupDetails(details);
@@ -38,8 +43,9 @@ const Content = (props) => {
       .catch(console.error);
   };
 
-  const handleSeriesClick = (series) => {
+  const handleSeriesClick = (series, index) => {
     console.debug("Clicked series: " + series.label);
+    setSeriesIndex(index);
     fetchSeriesDetails(series.name)
       .then((details) => {
         setSeriesDetails(details);
@@ -54,13 +60,18 @@ const Content = (props) => {
         <Grid item xs={3}>
           <Search
             filtered={filteredGroups}
+            selectedIndex={groupIndex}
             onFilterChange={handleFilterChange}
             onGroupClick={handleGroupClick}
           />
         </Grid>
         <Grid item xs={3}>
           {!isEmpty(groupDetails) && (
-            <Group details={groupDetails} onSeriesClick={handleSeriesClick} />
+            <Group
+              details={groupDetails}
+              selectedIndex={seriesIndex}
+              onSeriesClick={handleSeriesClick}
+            />
           )}
         </Grid>
         <Grid item xs={6}>
