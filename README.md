@@ -23,7 +23,7 @@
 > A strong dark beer brewed in the fall and drunk in the spring.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/averycrespi/bock/master/public/screenshot.png" width="600"/>
+    <img src="https://raw.githubusercontent.com/averycrespi/bock/master/public/screenshot.png"/>
 </p>
 
 ## Getting Started
