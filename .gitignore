@@ -71,3 +71,6 @@ dist/
 
 # JSDoc docs
 docs/
+
+# Local Netlify folder
+.netlify
