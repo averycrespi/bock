@@ -1,24 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
-/**
- * Renders a list of labelled items.
- *
- * @component
- */
-const LabelledList = (props) => {
+import PropTypes from "prop-types";
+import React from "react";
+
+const LabelledList = ({ items, selectedIndex, onClick, maxHeight }) => {
   const handleClick = (index) => {
-    props.onClick(props.items[index], index);
+    onClick(items[index], index);
   };
 
   return (
-    <List style={{ maxHeight: props.maxHeight, overflow: "auto" }}>
-      {props.items.map((item, index) => (
+    <List style={{ maxHeight: maxHeight, overflow: "auto" }}>
+      {items.map((item, index) => (
         <ListItem
           button
           key={index}
-          selected={index == props.selectedIndex}
+          selected={index == selectedIndex}
           onClick={() => handleClick(index)}
         >
           <ListItemText primary={item.label} />

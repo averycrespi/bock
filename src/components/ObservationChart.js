@@ -1,29 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Line } from "react-chartjs-2";
+import PropTypes from "prop-types";
+import React from "react";
 import { useTheme } from "@material-ui/core/styles";
 
-/**
- * Renders a chart of observations.
- *
- * @component
- */
-const ObservationChart = (props) => {
+const ObservationChart = ({ details, observations }) => {
   const theme = useTheme();
-
   const chartData = {
-    labels: props.observations.map((o) => o.date),
+    labels: observations.map((o) => o.date),
     datasets: [
       {
-        label: props.details.description,
-        data: props.observations.map((o) => o.value),
+        label: details.description,
+        data: observations.map((o) => o.value),
         borderColor: theme.palette.primary.main,
         backgroundColor: "#00000000", // Transparent
         lineTension: 0,
       },
     ],
   };
-
   return <Line data={chartData} />;
 };
 

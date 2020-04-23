@@ -1,25 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
 import {
   Table,
-  TableHead,
   TableBody,
-  TableRow,
   TableCell,
+  TableHead,
+  TableRow,
 } from "@material-ui/core";
 
-/**
- * Renders a table of observations.
- *
- * @component
- */
-const ObservationTable = (props) => {
+import PropTypes from "prop-types";
+import React from "react";
+
+const ObservationTable = ({ observations, maxHeight }) => {
   const percentChange = (i) => {
     if (i == 0) {
       return "N/A";
     } else {
-      const curr = props.observations[i].value;
-      const prev = props.observations[i - 1].value;
+      const curr = observations[i].value;
+      const prev = observations[i - 1].value;
       const change = (100 * ((curr - prev) / prev)).toFixed(2);
       if (change >= 0) {
         return "+" + change + "%";
@@ -30,7 +26,7 @@ const ObservationTable = (props) => {
   };
 
   return (
-    <div style={{ maxHeight: props.maxHeight, overflow: "auto" }}>
+    <div style={{ maxHeight: maxHeight, overflow: "auto" }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -40,7 +36,7 @@ const ObservationTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.observations.map((o, i) => (
+          {observations.map((o, i) => (
             <TableRow key={i}>
               <TableCell>{o.date}</TableCell>
               <TableCell align="right">{o.value}</TableCell>
@@ -57,7 +53,7 @@ ObservationTable.propTypes = {
   observations: PropTypes.arrayOf(
     PropTypes.shape({ date: PropTypes.string, value: PropTypes.number })
   ).isRequired,
-  maxHeight: PropTypes.number.isRequired,
+  maxHeight: PropTypes.string,
 };
 
 ObservationTable.defaultProps = {

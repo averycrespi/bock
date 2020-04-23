@@ -1,13 +1,5 @@
-/**
- * Stores the UI colour palette.
- *
- * The colours were inspired by the [Bank of Canada](https://design.bankofcanada.ca/design/colour-scheme/).
- *
- * The palette was create by the [Material UI Color Tool](https://material.io/resources/color/).
- *
- * @constant
- */
-export const PALETTE = {
+// Colours inspired by the [Bank of Canada](https://design.bankofcanada.ca/design/colour-scheme/).
+export default {
   primary: {
     light: "#FF2258", // Radical Red
     main: "#F4083E", // Red Ribbon

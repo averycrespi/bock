@@ -1,6 +1,6 @@
-import { fetchGroups } from "./fetch";
+import fetchGroups from "./fetchGroups";
 
-describe("test App fetch", () => {
+describe("test groups fetch", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });

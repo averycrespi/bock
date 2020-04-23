@@ -1,16 +1,10 @@
 import { Validator } from "jsonschema";
 
-/**
- * Base URL of the Valet API.
- *
- * @constant
- */
 export const BASE_URL = "https://www.bankofcanada.ca/valet";
 
 /**
  * Fetch, validate, and transform data from a URL.
  *
- * @method
  * @param {String} url URL to fetch data from
  * @param {Object} schema Schema to validate data with
  * @param {Function} transform Function to transform data with
@@ -35,7 +29,6 @@ export async function fetchData(url, schema, transform) {
  *
  * Converts from `{ name: { ...values } }` to `[ { name, ...values } ]`.
  *
- * @method
  * @param {Object} obj Groups or series object
  * @returns {Array} Array of groups or series
  */
@@ -45,7 +38,6 @@ export const flattenNames = (obj) =>
 /**
  * Compare the labels of two groups or series.
  *
- * @method
  * @param {Object} a First group or series
  * @param {Object} b Second group or series
  * @returns {Number} -1 if a < b; 1 if a > b; 0 if a == b

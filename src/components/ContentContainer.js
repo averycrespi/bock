@@ -1,39 +1,34 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+
 import { Grid } from "@material-ui/core";
-
-import Search from "./Search";
-import Group from "./Group";
-import Series from "./Series";
-
-import { fetchGroupDetails, fetchSeriesDetails } from "./fetch";
+import GroupContainer from "./GroupContainer";
+import PropTypes from "prop-types";
+import SearchContainer from "./SearchContainer";
+import SeriesContainer from "./SeriesContainer";
+import { fetchGroupDetails } from "../api/groupDetails";
+import { fetchSeriesDetails } from "../api/seriesDetails";
 
 const isEmpty = (obj) => Object.keys(obj).length == 0;
 
-/**
- * Renders the application content.
- *
- * @component
- */
-const Content = (props) => {
+const ContentContainer = ({ groups }) => {
   const [filteredGroups, setFilteredGroups] = useState([]);
-  const [groupIndex, setGroupIndex] = useState(null);
+  const [groupIndex, setGroupIndex] = useState(-1);
   const [groupDetails, setGroupDetails] = useState({});
-  const [seriesIndex, setSeriesIndex] = useState(null);
+  const [seriesIndex, setSeriesIndex] = useState(-1);
   const [seriesDetails, setSeriesDetails] = useState({});
 
   const handleFilterChange = (query) => {
     console.debug("Filtered groups by query: " + query);
-    setGroupIndex(null);
+    setGroupIndex(-1);
     setFilteredGroups(
-      props.groups.filter((group) => RegExp(query, "i").test(group.label))
+      groups.filter((group) => RegExp(query, "i").test(group.label))
     );
   };
 
   const handleGroupClick = (group, index) => {
     console.debug("Clicked group: " + group.label);
     setGroupIndex(index);
-    setSeriesIndex(null);
+    setSeriesIndex(-1);
     fetchGroupDetails(group.name)
       .then((details) => {
         setGroupDetails(details);
@@ -55,10 +50,10 @@ const Content = (props) => {
   };
 
   return (
-    Object.keys(props.groups).length > 0 && (
+    Object.keys(groups).length > 0 && (
       <Grid container>
         <Grid item xs={3}>
-          <Search
+          <SearchContainer
             filtered={filteredGroups}
             selectedIndex={groupIndex}
             onFilterChange={handleFilterChange}
@@ -67,7 +62,7 @@ const Content = (props) => {
         </Grid>
         <Grid item xs={3}>
           {!isEmpty(groupDetails) && (
-            <Group
+            <GroupContainer
               details={groupDetails}
               selectedIndex={seriesIndex}
               onSeriesClick={handleSeriesClick}
@@ -75,14 +70,16 @@ const Content = (props) => {
           )}
         </Grid>
         <Grid item xs={6}>
-          {!isEmpty(seriesDetails) && <Series details={seriesDetails} />}
+          {!isEmpty(seriesDetails) && (
+            <SeriesContainer details={seriesDetails} />
+          )}
         </Grid>
       </Grid>
     )
   );
 };
 
-Content.propTypes = {
+ContentContainer.propTypes = {
   groups: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -92,4 +89,4 @@ Content.propTypes = {
   ).isRequired,
 };
 
-export default Content;
+export default ContentContainer;
