@@ -1,4 +1,4 @@
-import { fetchSeriesDetails } from "./common";
+import { fetchSeriesDetails } from "./seriesDetails";
 
 describe("test series details fetch", () => {
   beforeEach(() => {

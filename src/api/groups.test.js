@@ -1,4 +1,4 @@
-import fetchGroups from "./fetchGroups";
+import { fetchGroups } from "./groups";
 
 describe("test groups fetch", () => {
   beforeEach(() => {
